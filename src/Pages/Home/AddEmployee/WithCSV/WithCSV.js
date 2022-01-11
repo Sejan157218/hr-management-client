@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CSVReader } from "react-papaparse";
+import axios from "axios";
 
 const WithCSV = () => {
+  const [messege, setMessege] = useState("");
+  const [filterData, setFilterData] = useState();
   const buttonRef = React.createRef();
   const handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
@@ -12,21 +15,53 @@ const WithCSV = () => {
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
+    setMessege('')
     console.log(err);
   };
 
   const handleOnRemoveFile = (data) => {
+    setMessege('')
     console.log(data);
   };
 
   const handleRemoveFile = (e) => {
+    setMessege('')
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.removeFile(e);
     }
   };
   const handleOnDrop = (data) => {
-    console.log(data);
+    setMessege('')
+    const regName = /^[a-z ,.'-]+$/i;
+    const regEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const dataFilter = data.filter(
+      (dt) =>
+        regName.test(dt.data[0]) &&
+        regName.test(dt.data[1]) &&
+        regEmail.test(dt.data[2])
+    );
+    // dataFilter.map(dt=>console.log(dt.data))
+    setFilterData(dataFilter);
+  };
+
+  const handleToPostData = (e) => {
+    e.preventDefault();
+    filterData.map((dt) =>{
+      const data={
+        firstname: dt.data[0],
+        lastname: dt.data[1],
+        email: dt.data[2],
+      };
+      axios
+      .post("http://localhost:9000/employee", data)
+      .then(function (response) {
+        console.log(response);
+        if(response.data.insertId >0){
+          setMessege('Employee Added Successfully !');
+        };
+      })
+    });
   };
 
   return (
@@ -53,7 +88,11 @@ const WithCSV = () => {
               <h2>
                 <span>New Employee</span>
               </h2>
-              <p>Adding a new employee usually refers to adding a new hire's record to the system. This includes adding general details about the employees. </p>
+              <p>
+                Adding a new employee usually refers to adding a new hire's
+                record to the system. This includes adding general details about
+                the employees.{" "}
+              </p>
             </div>
           </div>
         </div>
@@ -74,7 +113,6 @@ const WithCSV = () => {
                     onDrop={handleOnDrop}
                     addRemoveButton
                     onRemoveFile={handleOnRemoveFile}
-                
                   >
                     {({ file }) => (
                       <>
@@ -84,11 +122,10 @@ const WithCSV = () => {
                             height: "5rem",
                           }}
                           className="input"
-                         
                         >
                           <div className="ms-2 mt-2">
-                          {!file && <p>Upload file Or Drag File</p>}
-                          {file && file.name}
+                            {!file && <p>Upload file Or Drag File</p>}
+                            {file && file.name}
                           </div>
                         </div>
                         {!file && (
@@ -111,6 +148,7 @@ const WithCSV = () => {
                         )}
 
                         <button
+                          onClick={handleToPostData}
                           style={{ display: "inline" }}
                           className="button"
                         >
@@ -120,6 +158,7 @@ const WithCSV = () => {
                     )}
                   </CSVReader>
                 </form>
+                {messege && <p style={{ color: "#fff" }}>{messege}</p>}
               </div>
             </div>
           </div>
