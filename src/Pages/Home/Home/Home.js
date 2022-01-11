@@ -1,22 +1,24 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
-import { Link, Outlet, Route ,Routes} from "react-router-dom";
-import AddEmployee from "../AddEmployee/AddEmployee/AddEmployee";
-
-import SeeAllEmployee from "../SeeAllEmployee/SeeAllEmployee";
+import { Col, Nav, Row } from "react-bootstrap";
+import { Link, Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
     <div>
       <Row>
         <Col xs={12} md={2}>
-         <Link to="/addemployee">AddEmployee</Link>
-         <br />
-         <Link to="/employeelist">SeeAllEmployee</Link>
+          <Nav className="flex-column">
+            <Nav.Link as={Link} to="/addemployee">
+            Add Employee
+            </Nav.Link>
+            <Nav.Link as={Link} to="/employeelist">
+            See All Employee
+            </Nav.Link>
+            {/* <Nav.Link onClick={SignOut}>SignOut</Nav.Link> */}
+          </Nav>
         </Col>
         <Col xs={12} md={10}>
-            <Outlet></Outlet>
-       
+          <Outlet></Outlet>
         </Col>
       </Row>
     </div>

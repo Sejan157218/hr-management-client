@@ -35,20 +35,17 @@ const SeeAllEmployee = () => {
             <th>Employee ID</th>
             <th>Employee Name</th>
             <th>Employee Email</th>
-            <th>ACtion</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {allEmployee.map(employee =>
                         <tr className="mb-2">
-
                             <td>{employee?.id}</td>
                             <td>{employee?.firstname} {employee?.lastname}</td>
                             <td>{employee?.email}</td>
-                          
                             <td><button className="update-btn" onClick={() => handlerToDelete(employee?.id)}><i className="fas fa-trash"></i></button></td>
                         </tr>
-
                     )}
         </tbody>
       </Table>
