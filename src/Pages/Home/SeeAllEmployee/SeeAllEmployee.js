@@ -4,6 +4,7 @@ import { Table } from "react-bootstrap";
 import "./SeeAllEmployee.css";
 
 const SeeAllEmployee = () => {
+  const [loadData,setLoadData]=useState(false)
   const [allEmployee, setAllEmployee] = useState([]);
   const [pageCount, setPageCount] = useState(1);
   const [page, setPage] = useState(1);
@@ -15,7 +16,7 @@ const SeeAllEmployee = () => {
         setAllEmployee(data.result);
         setPageCount(data.numberOfPages);
       });
-  }, [page]);
+  }, [page,loadData]);
   const handlerToDelete = (id) => {
     const proceed = window.confirm("Are You Confirm to delete this");
     if (proceed) {
@@ -24,15 +25,18 @@ const SeeAllEmployee = () => {
         .then(function (response) {
           console.log(response);
           if (response.data.insertId == 0) {
+            setLoadData(true)
             const filterData = allEmployee.filter(
               (employee) => employee.id !== id
             );
             setAllEmployee(filterData);
             alert("successfully deleted");
+            setLoadData(false)
           }
         });
     }
   };
+
   return (
     <div>
       <Table striped bordered hover responsive className="table-custom">
@@ -46,7 +50,7 @@ const SeeAllEmployee = () => {
         </thead>
         <tbody>
           {allEmployee.map((employee) => (
-            <tr className="mb-2">
+            <tr key={employee?.id} className="mb-2">
               <td>{employee?.firstname}</td>
               <td>{employee?.lastname}</td>
               <td>{employee?.email}</td>
@@ -64,7 +68,7 @@ const SeeAllEmployee = () => {
       </Table>
       <div className="d-flex justify-content-center">
         {
-          <div className="pagination mx-auto">
+          <div className="pagination">
             {[...Array(pageCount).keys()].map((number) => (
               <button
                 key={number}

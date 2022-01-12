@@ -24,7 +24,7 @@
 
 .pagination{
     margin: 30px;
-
+    display: flex;
 }
 .pagination button{
     background-color: #367074;

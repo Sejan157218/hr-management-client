@@ -1,4 +1,3 @@
-import { logDOM } from "@testing-library/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -26,7 +25,7 @@ const WithForm = () => {
     } else if (!regEmail.test(formData.email)) {
       setError("Invalid Email.");
     } else {
-      console.log(formData);
+     
       setError("");
       axios
         .post("https://agile-dawn-54726.herokuapp.com/employee", formData)

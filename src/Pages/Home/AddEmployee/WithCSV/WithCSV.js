@@ -56,7 +56,6 @@ const WithCSV = () => {
       axios
       .post("https://agile-dawn-54726.herokuapp.com/employee", data)
       .then(function (response) {
-        console.log(response);
         if(response.data.insertId >0){
           setMessege('Employee Added Successfully !');
         };
