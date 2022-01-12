@@ -1,0 +1,37 @@
+.table-custom ,td{
+    color: #fff;
+}
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: var(--bs-table-striped-bg);
+    color: #fff;
+}
+.delete-btn{
+    background-color: #367074;
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    color: #fff;
+}
+.delete-btn:hover{
+    background-color: #ffffff3d;
+    color: #367074;
+}
+.tbody, td, tfoot, th, thead, tr {
+    border-color: none;
+    border-style: none;
+    border-width: 0;
+}
+
+.pagination{
+    margin: 30px;
+
+}
+.pagination button{
+    background-color: #367074;
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    color: #fff;
+    margin-left: 4px;
+  
+}

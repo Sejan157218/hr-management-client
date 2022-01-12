@@ -1,54 +1,81 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import "./SeeAllEmployee.css";
 
 const SeeAllEmployee = () => {
-    const [allEmployee, setAllEmployee] = useState([]);
+  const [allEmployee, setAllEmployee] = useState([]);
+  const [pageCount, setPageCount] = useState(1);
+  const [page, setPage] = useState(1);
 
-    useEffect(() => {
-        fetch('http://localhost:9000/employee')
-            .then(res => res.json())
-            .then(data => setAllEmployee(data))
-    }, []);
-    console.log(allEmployee);
-
-    const handlerToDelete = id => {
-        console.log(id);
-        const proceed = window.confirm('Are You Confirm to delete this');
-        if (proceed) {
-            axios.delete(`http://localhost:9000/employee/${id}`)
-                .then(function (response) {
-                    console.log(response);
-                    if (response.data.insertId==0) {
-                        const filterData = allEmployee.filter(employee => employee.id !== id);
-                        setAllEmployee(filterData)
-                        alert('successfully deleted');
-                    }
-                })
-        }
+  useEffect(() => {
+    fetch(`https://agile-dawn-54726.herokuapp.com/employee?page=${page}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAllEmployee(data.result);
+        setPageCount(data.numberOfPages);
+      });
+  }, [page]);
+  const handlerToDelete = (id) => {
+    const proceed = window.confirm("Are You Confirm to delete this");
+    if (proceed) {
+      axios
+        .delete(`https://agile-dawn-54726.herokuapp.com/employee/${id}`)
+        .then(function (response) {
+          console.log(response);
+          if (response.data.insertId == 0) {
+            const filterData = allEmployee.filter(
+              (employee) => employee.id !== id
+            );
+            setAllEmployee(filterData);
+            alert("successfully deleted");
+          }
+        });
     }
+  };
   return (
     <div>
       <Table striped bordered hover responsive className="table-custom">
         <thead>
           <tr>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
-            <th>Employee Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {allEmployee.map(employee =>
-                        <tr className="mb-2">
-                            <td>{employee?.id}</td>
-                            <td>{employee?.firstname} {employee?.lastname}</td>
-                            <td>{employee?.email}</td>
-                            <td><button className="update-btn" onClick={() => handlerToDelete(employee?.id)}><i className="fas fa-trash"></i></button></td>
-                        </tr>
-                    )}
+          {allEmployee.map((employee) => (
+            <tr className="mb-2">
+              <td>{employee?.firstname}</td>
+              <td>{employee?.lastname}</td>
+              <td>{employee?.email}</td>
+              <td>
+                <button
+                  className="delete-btn"
+                  onClick={() => handlerToDelete(employee?.id)}
+                >
+                  <i className="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
+      <div className="d-flex justify-content-center">
+        {
+          <div className="pagination mx-auto">
+            {[...Array(pageCount).keys()].map((number) => (
+              <button
+                key={number}
+                onClick={() => setPage(number + 1)}
+              >
+                {number + 1}
+              </button>
+            ))}
+          </div>
+        }
+      </div>
     </div>
   );
 };

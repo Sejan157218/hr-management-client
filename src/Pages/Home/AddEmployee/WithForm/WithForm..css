@@ -293,7 +293,7 @@ a.button:hover {
 
 /* CONTENT */
 .content {
-    position: fixed;
+
     z-index: 1;
     float: none;
     margin: 0 auto;
@@ -699,7 +699,7 @@ input {
     }
     /* WRAP */
     .wrap {
-        position: fixed;
+      
         top: 0;
         left: 0;
         right: 0;

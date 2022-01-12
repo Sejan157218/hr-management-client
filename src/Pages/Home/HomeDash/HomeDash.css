@@ -1,0 +1,36 @@
+
+.dashbord-div{
+    min-height: 50px;
+    box-shadow: none;
+    border: 0;
+    position: relative;
+    margin-bottom: 24px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+}
+.dashbord-div span{
+  font-size: 20px;
+  font-weight: bold;
+}
+.dashbord-div-img{
+    text-align: center;
+    line-height: 50px;
+    margin-left: 15px;
+    color: #000;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    opacity: .1;
+}
+
+.dashbord-div-card{
+    background: linear-gradient(180deg, rgba(34,46,64,1) 0%, rgba(81,195,184,1) 100%);
+    color: #fff;
+    width: 24rem;
+    border-radius: 10px;
+}
+.dashbord-div-icon{
+    font-size: 90px;
+}

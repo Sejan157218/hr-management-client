@@ -54,7 +54,7 @@ const WithCSV = () => {
         email: dt.data[2],
       };
       axios
-      .post("http://localhost:9000/employee", data)
+      .post("https://agile-dawn-54726.herokuapp.com/employee", data)
       .then(function (response) {
         console.log(response);
         if(response.data.insertId >0){

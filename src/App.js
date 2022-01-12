@@ -8,6 +8,7 @@ import SeeAllEmployee from "./Pages/Home/SeeAllEmployee/SeeAllEmployee";
 import AddEmployee from "./Pages/Home/AddEmployee/AddEmployee/AddEmployee";
 import WithForm from "./Pages/Home/AddEmployee/WithForm/WithForm";
 import WithCSV from "./Pages/Home/AddEmployee/WithCSV/WithCSV";
+import HomeDash from "./Pages/Home/HomeDash/HomeDash";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
      <Router>
      <Routes>
         <Route path="/" element={<Home />} >
+        <Route path="/" element={<HomeDash />} />
           <Route path="addemployee" element={<AddEmployee />} >
             <Route path="" element={<WithForm />} />
             <Route path="withcsv" element={<WithCSV />} />
